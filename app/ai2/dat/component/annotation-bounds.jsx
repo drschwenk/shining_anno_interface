@@ -53,6 +53,7 @@ class AnnotationBounds extends React.Component {
     else{
       var box_opacity = 0.3
     }
+    console.log(this.props);
     var styles = {
           base: {
             left: this.props.x1 + 'px',

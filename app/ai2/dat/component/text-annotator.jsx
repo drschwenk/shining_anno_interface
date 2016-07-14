@@ -122,7 +122,7 @@ class TextAnnotator extends Annotator {
     } else {
       overlay = this.renderOverlay();
     }
-    
+
     var rect;
     if (this.state.annotating && this.state.firstPoint && this.state.secondPoint) {
       rect = (
@@ -140,7 +140,7 @@ class TextAnnotator extends Annotator {
             onMouseMove={this.updateCrosshairs.bind(this)}
             ref="origin">
           {this.crosshairs()}
-          <img src={this.props.imageUrl} style={{height: body_height}} />
+          <img src={this.props.imageUrl} className="hcenter vcenter"/>
           {this.props.annotations}
           {rect}
         </div>

@@ -11,7 +11,7 @@ class ImageManager extends EventEmitter {
     this.currentImage = undefined;
     this.currentFinishedImageIndex = 0;
     this.setFinishedImageIds([]);
-    this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/textbook-annotation-test/smaller-page-images/"
+    this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/shining-3-watercycle-test/page-images/"
   }
   isSupported() {
     return Reader.isSupported;

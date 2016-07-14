@@ -155,7 +155,7 @@ class RelationshipAnnotator extends Annotator {
       <div className={cssClass}
         style={style}>
         <div className="annotation-pane-image" ref="origin">
-          <img src={this.props.imageUrl} style={{height: body_height}} />
+          <img src={this.props.imageUrl} className="hcenter vcenter"/>
           {this.props.annotations}
         </div>
       </div>

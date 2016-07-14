@@ -64,8 +64,7 @@ class AnnotationManager extends EventEmitter {
     this.idSequence = 0;
     this.current_category_selector= "Short Answer";
     this.current_question_group = 1;
-    // this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/textbook-annotation-test/merged-annotations/";
-    this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/textbook-annotation-test/test-remerged-annotations/";
+    this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/shining-3-watercycle-test/anno_w_infrastructure/";
   }
   clear() {
     this.annotations.clear();
@@ -241,16 +240,23 @@ class AnnotationManager extends EventEmitter {
     //   var box_name = key;
     //   var annoation_val = remoteAnnotation[key];
     // }
-    var o_height = remoteAnnotation.v_dim;
+    // var o_height = remoteAnnotation.v_dim;
+    // var o_height = 264;
     var bounding_boxes = remoteAnnotation.rectangle;
-    var c1 = ~~(bounding_boxes[0][0]*body_height/o_height)-10;
-    var c2 = ~~(bounding_boxes[0][1]*body_height/o_height)-10;
-    var c3 = ~~(bounding_boxes[1][0]*body_height/o_height)+10;
-    var c4 = ~~(bounding_boxes[1][1]*body_height/o_height)+10;
+
+    // var c1 = ~~(bounding_boxes[0][0]*body_height/o_height)-10;
+    // var c2 = ~~(bounding_boxes[0][1]*body_height/o_height)-10;
+    // var c3 = ~~(bounding_boxes[1][0]*body_height/o_height)+10;
+    // var c4 = ~~(bounding_boxes[1][1]*body_height/o_height)+10;
+
+    var c1 = bounding_boxes[0][0];
+    var c2 = bounding_boxes[0][1];
+    var c3 = bounding_boxes[1][0];
+    var c4 = bounding_boxes[1][1];
 
     var bounds = new Bounds(new Point(c1, c2), new Point(c3, c4));
-
     var annotation;
+    console.log(remoteAnnotation);
     switch (annotation_type) {
       case AnnotationType.SHAPE:
         annotation = new ShapeAnnotation(this.getNewAnnotationId(AnnotationType.SHAPE),bounds);
@@ -260,9 +266,8 @@ class AnnotationManager extends EventEmitter {
         break;
       case AnnotationType.QUESTION:
           annotation = new QuestionAnnotation(
-            remoteAnnotation.box_id,
+            remoteAnnotation.id,
             bounds,
-            remoteAnnotation.contents,
             remoteAnnotation.category,
             remoteAnnotation.group_n
             );
@@ -284,7 +289,7 @@ class AnnotationManager extends EventEmitter {
     }
 
     if (annotation) {
-      annotation.remoteId = remoteAnnotation.box_id;
+      annotation.remoteId = remoteAnnotation.id;
       this.importAnnotation(imageId, annotation);
       remoteAnnotationMap.set(annotation.remoteId, remoteAnnotation.id);
     }
@@ -309,9 +314,9 @@ class AnnotationManager extends EventEmitter {
 
     importRemoteAnnotations(image, callback) {
     var am = this;
-    var annotation_url = image.url.replace('jpeg', 'json').replace('smaller-page-images', 'annotations-w-questions');
-    // var annotation_url = image.url.replace('jpeg', 'json').replace('smaller-page-images', 'test-remerged-annotations');
-    // var annotation_url = image.url.replace('jpeg', 'json').replace('smaller-page-images', 'merged-annotations');
+    console.log(image.url);
+    var annotation_url = image.url.replace('page-images', 'anno-w-infrastructure') + '.json';
+    console.log(annotation_url);
     qwest.get(annotation_url).then(function(response) {
       var imported = 0;
       var remoteAnnotationMap = new Map();

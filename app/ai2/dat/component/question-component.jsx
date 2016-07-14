@@ -3,7 +3,7 @@
 const React = require('react');
 
 const AnnotationBounds = require('./annotation-bounds.jsx');
-const QuestionComponent = require('./test-annotation-component.jsx');
+const TextAnnotation = require('./test-annotation-component.jsx');
 
 class QuestionComponent extends TextAnnotationComponent{
   constructor(props) {
@@ -27,4 +27,4 @@ class QuestionComponent extends TextAnnotationComponent{
   }
 }
 
-module.exports = TextAnnotationComponent;
+module.exports = QuestionComponent;
