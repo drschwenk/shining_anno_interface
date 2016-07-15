@@ -61,12 +61,12 @@ class DiagramAnnotationTool extends React.Component {
   undoSingleClick(){
     var last_annotation = AnnotationManager.getLastClicked();
     console.log(last_annotation);
-    if(last_annotation.category.length > 1){
+    if(last_annotation.category.length > 1 && last_annotation.group_n.length > 1){
       last_annotation.category.pop();
       last_annotation.group_n.pop();
+      AnnotationManager.undoClick();
     }
     console.log(last_annotation);
-    AnnotationManager.undoClick();
     this.resetCurrent();
   }
   resetCurrent(){

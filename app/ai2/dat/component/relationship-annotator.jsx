@@ -161,8 +161,6 @@ class RelationshipAnnotator extends Annotator {
         style={style}>
         <div className="annotation-pane-image" ref="origin">
           <img src={this.props.imageUrl} className="hcenter vcenter"/>
-            <p className="flex-align-center">current relationship number</p>
-            <p className="flex-align-center">current number</p>
           {this.props.annotations}
         </div>
       </div>
