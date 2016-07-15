@@ -62,8 +62,9 @@ class AnnotationManager extends EventEmitter {
     this.mode = AnnotationMode.default();
     this.annotations = new Map();
     this.idSequence = 0;
-    this.current_category_selector= "Short Answer";
+    this.current_category_selector= "IntraObjectLinkage";
     this.current_question_group = 1;
+    this.current_click_order = 1;
     this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/shining-3-watercycle-test/anno_w_infrastructure/";
   }
   clear() {
@@ -82,8 +83,19 @@ class AnnotationManager extends EventEmitter {
   getCurrentGroupNumber(){
     return this.current_question_group;
   }
+  getCurrentClickNumber(){
+    return this.current_click_order;
+  }
   advanceCurrentGroupNumber(){
     this.current_question_group += 1;
+    this.emit(AnnotationManagerEvent.MODE_CHANGED);
+  }
+  advanceCurrentClickNumber(){
+    this.current_click_order += 1;
+    this.emit(AnnotationManagerEvent.MODE_CHANGED);
+  }
+  resetCurrentClickNumber(){
+    this.current_click_order = 1;
     this.emit(AnnotationManagerEvent.MODE_CHANGED);
   }
   resetAnnotations(imageId) {
@@ -256,7 +268,6 @@ class AnnotationManager extends EventEmitter {
 
     var bounds = new Bounds(new Point(c1, c2), new Point(c3, c4));
     var annotation;
-    console.log(remoteAnnotation);
     switch (annotation_type) {
       case AnnotationType.SHAPE:
         annotation = new ShapeAnnotation(this.getNewAnnotationId(AnnotationType.SHAPE),bounds);
@@ -314,9 +325,7 @@ class AnnotationManager extends EventEmitter {
 
     importRemoteAnnotations(image, callback) {
     var am = this;
-    console.log(image.url);
     var annotation_url = image.url.replace('page-images', 'anno-w-infrastructure') + '.json';
-    console.log(annotation_url);
     qwest.get(annotation_url).then(function(response) {
       var imported = 0;
       var remoteAnnotationMap = new Map();

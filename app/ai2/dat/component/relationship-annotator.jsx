@@ -101,7 +101,13 @@ class RelationshipAnnotator extends Annotator {
   handleClickEvent(event, annotation, arrowPoint, arrowPointType) {
     if(annotation instanceof QuestionAnnotation){
       annotation.category = AnnotationManager.getCurrentCategory();
-      annotation.group_n= AnnotationManager.getCurrentGroupNumber();
+      var gn = AnnotationManager.getCurrentGroupNumber();
+      var cn = AnnotationManager.getCurrentClickNumber();
+      var new_grouping = [gn, cn];
+      annotation.group_n.push(new_grouping);
+      // annotation.group_n[0] = AnnotationManager.getCurrentGroupNumber();
+      // annotation.group_n[1] = AnnotationManager.getCurrentClickNumber();
+      AnnotationManager.advanceCurrentClickNumber();
       AnnotationManager.addAnnotation(this.props.imageId, annotation);
     }
   }

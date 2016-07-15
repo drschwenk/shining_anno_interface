@@ -20,18 +20,12 @@ class AnnotationBounds extends React.Component {
     var zIndex = Math.round(Math.pow(2, 24)/(width * height));
 
     var color_map = new Object();
-    color_map["Header/Topic"] = "#8c9296";
-    color_map["Discussion"] = "#8c9296";
-    color_map["Definition"] = "#8c9296";
-    color_map["Question"] = "#e77423";
-    color_map["Answer"] = "#8c9296";
     color_map["unlabeled"] = "#8c9296";
-    color_map["Figure Label"] = "#8c9296";
-    color_map["Short Answer"] = "#e7d323";
-    color_map["Fill-in-the-Blank"] = "#286a8e";
-    color_map["True/False"] = "#3fb62c";
-    color_map["Multiple Choice"] = "#BA70CC";
-    color_map["Unlabeled"] = "#e77423";
+    color_map["IntraObjectLinkage"] = "#e7d323";
+    color_map["IntraObjectLabel"] = "#286a8e";
+    color_map["InterObjectLinkage"] = "#3fb62c";
+    color_map["IntraObjectLoop"] = "#BA70CC";
+    color_map["arrowDescriptor"] = "#e77423";
 
     color_map["No Consensus"] = "#8c9296";
 
@@ -47,13 +41,15 @@ class AnnotationBounds extends React.Component {
     var color_with_trans = 'rgba('+red+','+green+','+blue+','+opacity+')';
       return color_with_trans;
     }
-    if(this.props.group_n > 0 && this.props.group_n < AnnotationManager.getCurrentGroupNumber()){
+    console.log(this.props.group_n);
+    console.log(this.props.group_n.slice(-1)[0][0]);
+
+    if(this.props.group_n.slice(-1)[0][0] > 0 && this.props.group_n.slice(-1)[0][0] < AnnotationManager.getCurrentGroupNumber()){
       var box_opacity = 0.8
     }
     else{
       var box_opacity = 0.3
     }
-    console.log(this.props);
     var styles = {
           base: {
             left: this.props.x1 + 'px',

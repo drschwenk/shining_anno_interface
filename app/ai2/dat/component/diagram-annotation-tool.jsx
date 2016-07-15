@@ -32,15 +32,15 @@ class DiagramAnnotationTool extends React.Component {
     }
   }
   set_header(){
-    AnnotationManager.setCurrentCategory('Short Answer');
+    AnnotationManager.setCurrentCategory('IntraObjectLinkage');
     this.refs.cat_selector.setState({current_category: ''});
   }
   set_discussion(){
-    AnnotationManager.setCurrentCategory('Fill-in-the-Blank');
+    AnnotationManager.setCurrentCategory('IntraObjectLabel');
     this.refs.cat_selector.setState({current_category: 'Discussion'});
   }
   set_definition(){
-    AnnotationManager.setCurrentCategory('True/False');
+    AnnotationManager.setCurrentCategory('InterObjectLinkage');
     this.refs.cat_selector.setState({current_category: 'Definition'});
   }
   set_question(){
@@ -48,11 +48,11 @@ class DiagramAnnotationTool extends React.Component {
     this.refs.cat_selector.setState({current_category: 'Question'});
   }
   set_answer(){
-    AnnotationManager.setCurrentCategory('Multiple Choice');
+    AnnotationManager.setCurrentCategory('IntraObjectLoop');
     this.refs.cat_selector.setState({current_category: 'Answer'});
   }
   set_unlabeled(){
-    AnnotationManager.setCurrentCategory('unlabeled');
+    AnnotationManager.setCurrentCategory('arrowDescriptor');
     this.refs.cat_selector.setState({current_category: 'Unlabeled'});
   }
   componentDidMount() {
@@ -94,6 +94,7 @@ class DiagramAnnotationTool extends React.Component {
   }
   advanceQuestionGroup() {
     AnnotationManager.advanceCurrentGroupNumber();
+    AnnotationManager.resetCurrentClickNumber();
   }
   cancelDragOver(event) {
     event.preventDefault();

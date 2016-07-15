@@ -127,12 +127,9 @@ module.exports  = {
   saveAnnotations: (imageId, annotation_map) => {
     var return_vals = [];
     for(var a_map  in annotation_map){
-      // console.log(annotation_map[a_map]);
       annotation_map[a_map].forEach(function(obj, key){
       var subset = ['id', 'category'].reduce(function (o, k) {
-        // console.log(o);
         o[k] = obj[k];
-        // console.log(o);
         return o;
       },{});
       return_vals.push(subset);

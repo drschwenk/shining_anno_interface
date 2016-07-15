@@ -6,10 +6,10 @@ const KeyCode = {
   Header_Topic: 49,
   Discussion: 50,
   Definition: 51,
-  Question: 53,
+  Question: 55,
   Answer: 52,
   Figure_Lable:54,
-  Unlabeled: 55
+  Unlabeled: 53
 };
 Object.freeze(KeyCode);
 

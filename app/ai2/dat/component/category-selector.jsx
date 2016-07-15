@@ -27,31 +27,31 @@ class CategorySelector extends React.Component {
     }
     render() {
         var header_button = <CategoryButton
-          category={'Short Answer'}
+          category={'IntraObjectLinkage'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'1'}
           />;
         var discussion_button = <CategoryButton
-          category={'Fill-in-the-Blank'}
+          category={'IntraObjectLabel'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'2'}
           />;
         var question_button = <CategoryButton
-          category={'True/False'}
+          category={'InterObjectLinkage'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'3'}
           />;
         var label_button = <CategoryButton
-          category={'Multiple Choice'}
+          category={'IntraObjectLoop'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'4'}
           />;
         var answer_button = <CategoryButton
-          category={'Unlabeled'}
+          category={'arrowDescriptor'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'5'}
