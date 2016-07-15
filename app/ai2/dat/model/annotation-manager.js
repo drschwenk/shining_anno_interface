@@ -66,6 +66,7 @@ class AnnotationManager extends EventEmitter {
     this.current_question_group = 1;
     this.current_click_order = 1;
     this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/shining-3-watercycle-test/anno_w_infrastructure/";
+    this.last_clicked = 0;
   }
   clear() {
     this.annotations.clear();
@@ -101,6 +102,12 @@ class AnnotationManager extends EventEmitter {
   resetAnnotations(imageId) {
     this.annotations.set(imageId, new AnnotationCollection());
   }
+  setLastClicked(last_annotation_clicked){
+    this.last_clicked = last_annotation_clicked;
+  }
+  getLastClicked(){
+    return this.last_clicked;
+  }
   getAnnotations(imageId) {
     return this.annotations.get(imageId) || new AnnotationCollection();
   }
@@ -110,6 +117,9 @@ class AnnotationManager extends EventEmitter {
       annotation = this.annotations.get(imageId).get(annotationId);
     }
     return annotation;
+  }
+  undoClick(){
+    this.current_click_order -= 1;
   }
   hasAnnotations() {
     return this.annotations.size > 0;
@@ -175,6 +185,7 @@ class AnnotationManager extends EventEmitter {
     // Agent.saveAnnotation(this, imageId, annotation);
     // }
     this.emit(AnnotationManagerEvent.ANNOTATION_ADDED, imageId, annotation);
+    this.emit(AnnotationManagerEvent.MODE_CHANGED);
     return this;
   }
   removeAnnotation(imageId, annotationId) {

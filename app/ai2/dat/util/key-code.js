@@ -9,7 +9,8 @@ const KeyCode = {
   Question: 55,
   Answer: 52,
   Figure_Lable:54,
-  Unlabeled: 53
+  Unlabeled: 53,
+  Undo: 85
 };
 Object.freeze(KeyCode);
 

@@ -41,8 +41,6 @@ class AnnotationBounds extends React.Component {
     var color_with_trans = 'rgba('+red+','+green+','+blue+','+opacity+')';
       return color_with_trans;
     }
-    console.log(this.props.group_n);
-    console.log(this.props.group_n.slice(-1)[0][0]);
 
     if(this.props.group_n.slice(-1)[0][0] > 0 && this.props.group_n.slice(-1)[0][0] < AnnotationManager.getCurrentGroupNumber()){
       var box_opacity = 0.8
@@ -57,7 +55,7 @@ class AnnotationBounds extends React.Component {
             width: width + 'px',
             height: height + 'px',
             zIndex: zIndex,
-            backgroundColor: convertHex(get_rgb_value(this.props.category), box_opacity),
+            backgroundColor: convertHex(get_rgb_value(this.props.category.slice(-1)[0]), box_opacity),
             ':hover': {
               border: "8px dotted " + convertHex(get_rgb_value(AnnotationManager.getCurrentCategory()), 0.8)
             }

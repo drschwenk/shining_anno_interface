@@ -5,6 +5,7 @@ const HeaderAnnotationControls = require('./header-annotation-controls.jsx');
 const ImageAnnotator = require('./image-annotator.jsx');
 const ImageManager = require('../model/image-manager');
 const ImageManagerEvent = require('../model/image-manager-event');
+const AnnotationManagerEvent = require('../model/annotation-manager-event');
 const AnnotationManager = require('../model/annotation-manager');
 const Messages = require('./messages.jsx');
 const KeyMaster = require('../util/key-master');
@@ -24,6 +25,8 @@ class DiagramAnnotationTool extends React.Component {
     this.set_question= this.set_question.bind(this);
     this.set_answer= this.set_answer.bind(this);
     this.set_unlabeled= this.set_unlabeled.bind(this);
+    this.undoSingleClick= this.undoSingleClick.bind(this);
+    this.resetCurrent= this.resetCurrent.bind(this);
   }
   handleNewImageSet() {
     AnnotationManager.clear();
@@ -55,9 +58,24 @@ class DiagramAnnotationTool extends React.Component {
     AnnotationManager.setCurrentCategory('arrowDescriptor');
     this.refs.cat_selector.setState({current_category: 'Unlabeled'});
   }
+  undoSingleClick(){
+    var last_annotation = AnnotationManager.getLastClicked();
+    console.log(last_annotation);
+    if(last_annotation.category.length > 1){
+      last_annotation.category.pop();
+      last_annotation.group_n.pop();
+    }
+    console.log(last_annotation);
+    AnnotationManager.undoClick();
+    this.resetCurrent();
+  }
+  resetCurrent(){
+    var cur_cat = AnnotationManager.getCurrentCategory();
+    this.refs.cat_selector.setState({current_category: cur_cat});
+  }
   componentDidMount() {
     ImageManager.on(ImageManagerEvent.NEW_IMAGES, this.handleNewImageSet);
-
+    AnnotationManager.on(AnnotationManagerEvent.MODE_CHANGED, this.resetCurrent);
     KeyMaster.on(KeyCode.Enter, this.saveAndAdvance);
     KeyMaster.on(KeyCode.Advance_Question, this.advanceQuestionGroup);
     KeyMaster.on(KeyCode.Unlabeled, this.set_unlabeled);
@@ -66,6 +84,7 @@ class DiagramAnnotationTool extends React.Component {
     KeyMaster.on(KeyCode.Definition,this.set_definition);
     KeyMaster.on(KeyCode.Question, this.set_question);
     KeyMaster.on(KeyCode.Answer, this.set_answer);
+    KeyMaster.on(KeyCode.Undo, this.undoSingleClick);
   }
   componentWillUnmount() {
     ImageManager.off(ImageManagerEvent.NEW_IMAGES, this.handleNewImageSet);

@@ -15,9 +15,6 @@ class CategorySelector extends React.Component {
         this.handleClickEvent = this.handleClickEvent.bind(this);
     }
 
-    handleClickEvent(selected_category){
-        AnnotationManager.setCurrentCategory(selected_category);
-    }
     hotKeyPressed(keyed_category){
       this.handleClickEvent(keyed_category);
     }
@@ -56,6 +53,9 @@ class CategorySelector extends React.Component {
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'5'}
           />;
+        var relationship_number = AnnotationManager.getCurrentGroupNumber();
+        var component_number = AnnotationManager.getCurrentClickNumber();
+
         return (
         <div className="annotation-pane-dialog-header">
             <span>Select Category</span>
@@ -74,6 +74,10 @@ class CategorySelector extends React.Component {
             <div className="annotation-pane-dialog-content">
               {answer_button}
             </div>
+            <p className="flex-align-center">current relationship number</p>
+            <p className="flex-align-center">   {relationship_number}</p>
+            <p className="flex-align-center">current number</p>
+            <p className="flex-align-center">   {component_number}</p>
           </div>
     );
     }

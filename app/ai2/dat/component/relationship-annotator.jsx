@@ -100,15 +100,14 @@ class RelationshipAnnotator extends Annotator {
 
   handleClickEvent(event, annotation, arrowPoint, arrowPointType) {
     if(annotation instanceof QuestionAnnotation){
-      annotation.category = AnnotationManager.getCurrentCategory();
+      annotation.category.push(AnnotationManager.getCurrentCategory());
       var gn = AnnotationManager.getCurrentGroupNumber();
       var cn = AnnotationManager.getCurrentClickNumber();
       var new_grouping = [gn, cn];
       annotation.group_n.push(new_grouping);
-      // annotation.group_n[0] = AnnotationManager.getCurrentGroupNumber();
-      // annotation.group_n[1] = AnnotationManager.getCurrentClickNumber();
       AnnotationManager.advanceCurrentClickNumber();
       AnnotationManager.addAnnotation(this.props.imageId, annotation);
+      AnnotationManager.setLastClicked(annotation);
     }
   }
   //   if (!this.relationship) {
@@ -162,6 +161,8 @@ class RelationshipAnnotator extends Annotator {
         style={style}>
         <div className="annotation-pane-image" ref="origin">
           <img src={this.props.imageUrl} className="hcenter vcenter"/>
+            <p className="flex-align-center">current relationship number</p>
+            <p className="flex-align-center">current number</p>
           {this.props.annotations}
         </div>
       </div>
