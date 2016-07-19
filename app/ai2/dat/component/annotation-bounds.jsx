@@ -26,8 +26,12 @@ class AnnotationBounds extends React.Component {
     color_map["InterObjectLinkage"] = "#3fb62c";
     color_map["IntraObjectLoop"] = "#BA70CC";
     color_map["arrowDescriptor"] = "#e77423";
-
-    color_map["No Consensus"] = "#8c9296";
+    color_map['intraObjectRegionLabel'] = "#696100";
+    color_map['sectionTitle'] = "#ff00ff";
+    color_map['imageTitle'] = "#8256AD";
+    color_map['imageCaption'] = "#ff3300";
+    color_map['textMisc'] = "#cccc00";
+    // // color_map["No Consensus"] = "#8c9296";
 
     function get_rgb_value(k) {
       return color_map[k];
@@ -43,10 +47,10 @@ class AnnotationBounds extends React.Component {
     }
 
     if(this.props.group_n.slice(-1)[0][0] > 0 && this.props.group_n.slice(-1)[0][0] < AnnotationManager.getCurrentGroupNumber()){
-      var box_opacity = 0.8
+      var box_opacity = 0.4
     }
     else{
-      var box_opacity = 0.3
+      var box_opacity = 0.2
     }
     var styles = {
           base: {

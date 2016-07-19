@@ -22,7 +22,11 @@ class CategoryButton extends React.Component {
       color_map["InterObjectLinkage"] = "#3fb62c";
       color_map["IntraObjectLoop"] = "#BA70CC";
       color_map["arrowDescriptor"] = "#e77423";
-
+      color_map['intraObjectRegionLabel'] = "#696100";
+      color_map['sectionTitle'] = "#ff00ff";
+      color_map['imageTitle'] = "#8256AD";
+      color_map['imageCaption'] = "#ff3300";
+      color_map['textMisc'] = "#cccc00";
       function get_rgb_value(k) {
         return color_map[k];
       }
@@ -53,7 +57,7 @@ class CategoryButton extends React.Component {
         return (
           <button kind="primary" style={style}
             onClick={this_button.props.onClickEvent.bind(null, this.props.category)}
-            >{this.props.hotKeyNumber + ")      " + this.props.category}</button>
+            >{"[" + this.props.hotKeyNumber + "] " + this.props.category}</button>
     );
     }
 }

@@ -53,6 +53,37 @@ class CategorySelector extends React.Component {
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'5'}
           />;
+        var irl_button = <CategoryButton
+            category={'intraObjectRegionLabel'}
+            current_category={this.state.current_category}
+            onClickEvent={this.handleClickEvent}
+            hotKeyNumber={'6'}
+            />;
+          var st_button = <CategoryButton
+            category={'sectionTitle'}
+            current_category={this.state.current_category}
+            onClickEvent={this.handleClickEvent}
+            hotKeyNumber={'7'}
+            />;
+          var it_button = <CategoryButton
+            category={'imageTitle'}
+            current_category={this.state.current_category}
+            onClickEvent={this.handleClickEvent}
+            hotKeyNumber={'8'}
+            />;
+          var ic_button= <CategoryButton
+            category={'imageCaption'}
+            current_category={this.state.current_category}
+            onClickEvent={this.handleClickEvent}
+            hotKeyNumber={'9'}
+            />;
+
+          var mt_button = <CategoryButton
+            category={'textMisc'}
+            current_category={this.state.current_category}
+            onClickEvent={this.handleClickEvent}
+            hotKeyNumber={'0'}
+            />;
         var relationship_number = AnnotationManager.getCurrentGroupNumber();
         var component_number = AnnotationManager.getCurrentClickNumber();
 
@@ -74,10 +105,22 @@ class CategorySelector extends React.Component {
             <div className="annotation-pane-dialog-content">
               {answer_button}
             </div>
-            <p className="flex-align-center">current relationship number</p>
-            <p className="flex-align-center">   {relationship_number}</p>
-            <p className="flex-align-center">current number</p>
-            <p className="flex-align-center">   {component_number}</p>
+            <div className="annotation-pane-dialog-content">
+              {irl_button}
+            </div>
+            <div className="annotation-pane-dialog-content">
+              {st_button}
+            </div>
+            <div className="annotation-pane-dialog-content">
+              {it_button}
+            </div>
+            <div className="annotation-pane-dialog-content">
+              {ic_button}
+            </div>
+            <div className="annotation-pane-dialog-content">
+              {mt_button}
+            </div>
+            <p className="flex-align-center">rel= {relationship_number} cn= {component_number}</p>
           </div>
     );
     }

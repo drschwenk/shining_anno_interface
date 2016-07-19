@@ -124,6 +124,9 @@ class AnnotationManager extends EventEmitter {
   hasAnnotations() {
     return this.annotations.size > 0;
   }
+  undoGroup(){
+    this.current_question_group -=1;
+  }
   addRelationships(imageId, relationship) {
     var annotations = this.getAnnotations(imageId).all();
     annotations.forEach(function(annotation) {
@@ -336,7 +339,7 @@ class AnnotationManager extends EventEmitter {
 
     importRemoteAnnotations(image, callback) {
     var am = this;
-    var annotation_url = image.url.replace('page-images', 'anno-w-infrastructure') + '.json';
+    var annotation_url = image.url.replace('ai2-vision-datasets/shining3/images/', 'ai2-vision-turk-data/shining-3-watercycle-test/anno-w-infrastructure/') + '.json';
     qwest.get(annotation_url).then(function(response) {
       var imported = 0;
       var remoteAnnotationMap = new Map();

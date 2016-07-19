@@ -19,13 +19,18 @@ class DiagramAnnotationTool extends React.Component {
     this.state = { hasImages: false };
     this.handleNewImageSet = this.handleNewImageSet.bind(this);
     this.saveAndAdvance = this.saveAndAdvance.bind(this);
-    this.set_discussion= this.set_discussion.bind(this);
-    this.set_header= this.set_header.bind(this);
-    this.set_definition= this.set_definition.bind(this);
-    this.set_question= this.set_question.bind(this);
-    this.set_answer= this.set_answer.bind(this);
-    this.set_unlabeled= this.set_unlabeled.bind(this);
+    this.set_IntraObjectLabel= this.set_IntraObjectLabel.bind(this);
+    this.set_IntraObjectLinkage= this.set_IntraObjectLinkage.bind(this);
+    this.set_InterObjectLinkage= this.set_InterObjectLinkage.bind(this);
+    this.set_IntraObjectLoop= this.set_IntraObjectLoop.bind(this);
+    this.set_arrowDescriptor= this.set_arrowDescriptor.bind(this);
+    this.set_intraObjectRegionLabel = this.set_intraObjectRegionLabel.bind(this);
+    this.set_sectionTitle = this.set_sectionTitle.bind(this);
+    this.set_imageTitle = this.set_imageTitle.bind(this);
+    this.set_imageCaption = this.set_imageCaption.bind(this);
+    this.set_textMisc = this.set_textMisc.bind(this);
     this.undoSingleClick= this.undoSingleClick.bind(this);
+    this.undoGroup= this.undoGroup.bind(this);
     this.resetCurrent= this.resetCurrent.bind(this);
   }
   handleNewImageSet() {
@@ -34,29 +39,45 @@ class DiagramAnnotationTool extends React.Component {
       this.setState({ hasImages: true });
     }
   }
-  set_header(){
+  set_IntraObjectLinkage(){
     AnnotationManager.setCurrentCategory('IntraObjectLinkage');
-    this.refs.cat_selector.setState({current_category: ''});
+    this.refs.cat_selector.setState({current_category: 'IntraObjectLinkage'});
   }
-  set_discussion(){
+  set_IntraObjectLabel(){
     AnnotationManager.setCurrentCategory('IntraObjectLabel');
-    this.refs.cat_selector.setState({current_category: 'Discussion'});
+    this.refs.cat_selector.setState({current_category: 'IntraObjectLabel'});
   }
-  set_definition(){
+  set_InterObjectLinkage(){
     AnnotationManager.setCurrentCategory('InterObjectLinkage');
-    this.refs.cat_selector.setState({current_category: 'Definition'});
+    this.refs.cat_selector.setState({current_category: 'InterObjectLinkage'});
   }
-  set_question(){
-    AnnotationManager.setCurrentCategory('Unlabeled');
-    this.refs.cat_selector.setState({current_category: 'Question'});
-  }
-  set_answer(){
+  set_IntraObjectLoop(){
     AnnotationManager.setCurrentCategory('IntraObjectLoop');
     this.refs.cat_selector.setState({current_category: 'Answer'});
   }
-  set_unlabeled(){
+  set_arrowDescriptor(){
     AnnotationManager.setCurrentCategory('arrowDescriptor');
-    this.refs.cat_selector.setState({current_category: 'Unlabeled'});
+    this.refs.cat_selector.setState({current_category: 'arrowDescriptor'});
+  }
+  set_intraObjectRegionLabel(){
+    AnnotationManager.setCurrentCategory('intraObjectRegionLabel');
+    this.refs.cat_selector.setState({current_category: 'intraObjectRegionLabel'});
+  }
+  set_sectionTitle(){
+    AnnotationManager.setCurrentCategory('sectionTitle');
+    this.refs.cat_selector.setState({current_category: 'sectionTitle'});
+  }
+  set_imageTitle(){
+    AnnotationManager.setCurrentCategory('imageTitle');
+    this.refs.cat_selector.setState({current_category: 'imageTitle'});
+  }
+  set_imageCaption(){
+    AnnotationManager.setCurrentCategory('imageCaption');
+    this.refs.cat_selector.setState({current_category: 'imageCaption'});
+  }
+  set_textMisc(){
+    AnnotationManager.setCurrentCategory('textMisc');
+    this.refs.cat_selector.setState({current_category: 'textMisc'});
   }
   undoSingleClick(){
     var last_annotation = AnnotationManager.getLastClicked();
@@ -66,25 +87,35 @@ class DiagramAnnotationTool extends React.Component {
       last_annotation.group_n.pop();
       AnnotationManager.undoClick();
     }
-    console.log(last_annotation);
     this.resetCurrent();
   }
   resetCurrent(){
     var cur_cat = AnnotationManager.getCurrentCategory();
     this.refs.cat_selector.setState({current_category: cur_cat});
   }
+  undoGroup(){
+    if(AnnotationManager.getCurrentGroupNumber() > 1){
+      AnnotationManager.undoGroup();
+    }
+    this.resetCurrent();
+  }
   componentDidMount() {
     ImageManager.on(ImageManagerEvent.NEW_IMAGES, this.handleNewImageSet);
     AnnotationManager.on(AnnotationManagerEvent.MODE_CHANGED, this.resetCurrent);
     KeyMaster.on(KeyCode.Enter, this.saveAndAdvance);
     KeyMaster.on(KeyCode.Advance_Question, this.advanceQuestionGroup);
-    KeyMaster.on(KeyCode.Unlabeled, this.set_unlabeled);
-    KeyMaster.on(KeyCode.Header_Topic, this.set_header);
-    KeyMaster.on(KeyCode.Discussion, this.set_discussion);
-    KeyMaster.on(KeyCode.Definition,this.set_definition);
-    KeyMaster.on(KeyCode.Question, this.set_question);
-    KeyMaster.on(KeyCode.Answer, this.set_answer);
+    KeyMaster.on(KeyCode.arrowDescriptor, this.set_arrowDescriptor);
+    KeyMaster.on(KeyCode.IntraObjectLinkage, this.set_IntraObjectLinkage);
+    KeyMaster.on(KeyCode.IntraObjectLabel, this.set_IntraObjectLabel);
+    KeyMaster.on(KeyCode.InterObjectLinkage, this.set_InterObjectLinkage);
+    KeyMaster.on(KeyCode.IntraObjectLoop, this.set_IntraObjectLoop);
+    KeyMaster.on(KeyCode.intraObjectRegionLabel, this.set_intraObjectRegionLabel);
+    KeyMaster.on(KeyCode.sectionTitle, this.set_sectionTitle);
+    KeyMaster.on(KeyCode.imageTitle, this.set_imageTitle);
+    KeyMaster.on(KeyCode.imageCaption, this.set_imageCaption);
+    KeyMaster.on(KeyCode.textMisc, this.set_textMisc);
     KeyMaster.on(KeyCode.Undo, this.undoSingleClick);
+    KeyMaster.on(KeyCode.GUndo, this.undoGroup);
   }
   componentWillUnmount() {
     ImageManager.off(ImageManagerEvent.NEW_IMAGES, this.handleNewImageSet);
@@ -126,19 +157,22 @@ class DiagramAnnotationTool extends React.Component {
     var url_params = this.getHITParams();
     var view = this.renderView();
     var sidebar = this.renderCategoryPicker();
+    var cur_image_params = ImageManager.getUrlParams();
+    var image_base = ImageManager.base_url;
+    var cur_image_url = image_base + cur_image_params.url
     return (
       <div className="diagram-annotation-tool"
           onDragOver={this.cancelDragOver}>
         <header className="padded flex-row">
           <h1 className=" flex-align-left">Textbook Annotation Tool</h1>
-          <button onClick={this.advanceQuestionGroup} className="btn-red">q) Save Question</button>
+          <button onClick={this.advanceQuestionGroup} className="btn-red">q) Save Relationship</button>
         <p>
           &emsp;
         </p>
          <button onClick={this.saveAndAdvance} className="btn-green">Save Page and Advance</button>
-          <a href="https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/textbook-annotation-test/question_hit_instructions/instructions.html"
+          <a href={cur_image_url}
             target="_blank" className="review_instructions flex-align-right">
-            <strong>Read Instructions Here</strong>
+            <strong>original image</strong>
           </a>
           <a href="http://allenai.org" target="_blank" className="made-by-ai2 flex-align-right">
             <strong>Made By:</strong>
