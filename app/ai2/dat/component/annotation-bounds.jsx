@@ -52,6 +52,12 @@ class AnnotationBounds extends React.Component {
     else{
       var box_opacity = 0.2
     }
+    var border_map = {
+      "A": "solid",
+      "T": "groove",
+      "B": "dashed",
+      "G": "dotted"
+    }
     var styles = {
           base: {
             left: this.props.x1 + 'px',
@@ -61,7 +67,8 @@ class AnnotationBounds extends React.Component {
             zIndex: zIndex,
             backgroundColor: convertHex(get_rgb_value(this.props.category.slice(-1)[0]), box_opacity),
             ':hover': {
-              border: "8px dotted " + convertHex(get_rgb_value(AnnotationManager.getCurrentCategory()), 0.8)
+              border: "6px " + border_map[this.props.id_type] + " "  + convertHex(get_rgb_value(AnnotationManager.getCurrentCategory()), 0.8)
+
             }
           }
       };

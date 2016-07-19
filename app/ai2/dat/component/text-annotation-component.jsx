@@ -14,6 +14,7 @@ class TextAnnotationComponent extends RelateableComponent {
     var label = null
     var category = this.props.annotation.category;
     var group_n = this.props.annotation.group_n;
+    var aID = this.props.annotation.id.charAt(0);
     // if (this.props.annotation.text) {
     //   label += ': \u201C' + this.props.annotation.text + '\u201D';
     // }
@@ -29,6 +30,7 @@ class TextAnnotationComponent extends RelateableComponent {
           textLabel={label}
           category={category}
           group_n={group_n}
+          id_type = {aID}
           onClick={this.onClick}
           x1={bounds.left}
           y1={bounds.top}
