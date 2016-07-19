@@ -24,7 +24,7 @@ class CategorySelector extends React.Component {
     }
     render() {
         var header_button = <CategoryButton
-          category={'IntraObjectLinkage'}
+          category={'InterObjectLinkage'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'1'}
@@ -36,19 +36,19 @@ class CategorySelector extends React.Component {
           hotKeyNumber={'2'}
           />;
         var question_button = <CategoryButton
-          category={'InterObjectLinkage'}
+          category={'arrowDescriptor'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'3'}
           />;
         var label_button = <CategoryButton
-          category={'IntraObjectLoop'}
+          category={'IntraObjectLinkage'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'4'}
           />;
         var answer_button = <CategoryButton
-          category={'arrowDescriptor'}
+          category={'IntraObjectLoop'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'5'}

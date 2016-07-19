@@ -62,7 +62,7 @@ class AnnotationManager extends EventEmitter {
     this.mode = AnnotationMode.default();
     this.annotations = new Map();
     this.idSequence = 0;
-    this.current_category_selector= "IntraObjectLinkage";
+    this.current_category_selector= "InterObjectLinkage";
     this.current_question_group = 1;
     this.current_click_order = 1;
     this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/shining-3-watercycle-test/anno_w_infrastructure/";
