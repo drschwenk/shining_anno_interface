@@ -258,29 +258,44 @@ class AnnotationManager extends EventEmitter {
     this.importAnnotation(imageId, annotation);
     remoteAnnotationMap.set(annotation.remoteId, annotation.id);
   }
-
+  calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+      var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+      return ratio;
+   }
   importRemoteAnnotation(imageId, annotation_type, remoteAnnotation, remoteAnnotationMap) {
     var tool_body = window.document.getElementsByTagName('main')[0];
     var body_height = tool_body.clientHeight;
-    // for(var key in remoteAnnotation){
-    //   var box_name = key;
-    //   var annoation_val = remoteAnnotation[key];
-    // }
-    // var o_height = remoteAnnotation.v_dim;
-    // var o_height = 264;
+    var body_width = tool_body.clientWidth;
+
+    var url_params = ImageManager.getUrlParams();
+    var o_height = url_params.vd;
+    var o_width = url_params.hd;
+
+    var cat_picker_width;
+    var div_elems = window.document.getElementsByTagName('div');
+    for(var i = 0; i < div_elems.length; i++){
+      if(div_elems[i].className == 'diagram-annotation-tool'){
+        var anno_main = div_elems[i].getElementsByTagName('main')[0];
+        var anno_elem = anno_main.getElementsByTagName('div');
+        for(var i = 0; i < anno_elem.length; i++){
+          if(anno_elem[i].className == 'annotation-pane-dialog-header'){
+            var pane_elem = anno_elem[i];
+            var cat_picker_width = pane_elem.clientWidth;
+          }
+        }
+      }
+    }
+    var anno_pane_width = body_width - cat_picker_width;
+    var scaling= this.calculateAspectRatioFit(o_width, o_height, anno_pane_width, body_height);
+
     var bounding_boxes = remoteAnnotation.rectangle;
 
-    // var c1 = ~~(bounding_boxes[0][0]*body_height/o_height)-10;
-    // var c2 = ~~(bounding_boxes[0][1]*body_height/o_height)-10;
-    // var c3 = ~~(bounding_boxes[1][0]*body_height/o_height)+10;
-    // var c4 = ~~(bounding_boxes[1][1]*body_height/o_height)+10;
-
-    var c1 = bounding_boxes[0][0];
-    var c2 = bounding_boxes[0][1];
-    var c3 = bounding_boxes[1][0];
-    var c4 = bounding_boxes[1][1];
-
+    var c1 = ~~(bounding_boxes[0][0] * scaling);
+    var c2 = ~~(bounding_boxes[0][1] * scaling);
+    var c3 = ~~(bounding_boxes[1][0] * scaling);
+    var c4 = ~~(bounding_boxes[1][1] * scaling);
     var bounds = new Bounds(new Point(c1, c2), new Point(c3, c4));
+
     var annotation;
     switch (annotation_type) {
       case AnnotationType.SHAPE:

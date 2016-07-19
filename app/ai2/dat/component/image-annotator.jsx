@@ -94,6 +94,8 @@ class ImageAnnotator extends React.Component {
     this.setState({
       imageId: image.id,
       imageUrl: image.url,
+      h_dim: image.hd,
+      v_dim: image.vd,
       error: undefined,
       loading: true,
       annotations: []
@@ -191,7 +193,8 @@ class ImageAnnotator extends React.Component {
           <RelationshipAnnotator
             showLabels={this.state.showLabels}
             imageUrl={this.state.imageUrl}
-            imageId={this.state.imageId}
+            h_dim={this.state.h_dim}
+            v_dim={this.state.v_dim}
             annotations={annotations} />
         );
         break;
@@ -236,4 +239,3 @@ class ImageAnnotator extends React.Component {
 }
 
 module.exports = ImageAnnotator;
-

@@ -71,6 +71,7 @@ class ImageManager extends EventEmitter {
     var image = this.getUrlParams();
     image.url = this.base_url + image.url;
     this.currentImage = image;
+
     this.emit(ImageManagerEvent.SELECTED_IMAGE_CHANGED, this.currentImage);
     return this;
   }

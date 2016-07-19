@@ -13,6 +13,7 @@ const ArrowAnnotation = require('../model/arrow-annotation');
 const Annotator = require('./annotator.jsx');
 const Radium = require('radium');
 
+
 class RelationshipAnnotator extends Annotator {
   constructor(props) {
     super(props);
@@ -147,20 +148,44 @@ class RelationshipAnnotator extends Annotator {
     }
   }
 
-
+  calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+      var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+      return { width: Math.round(srcWidth*ratio), height: Math.round(srcHeight*ratio)};
+   }
 
   render() {
     var tool_body = window.document.getElementsByTagName('main')[0];
     var body_height = tool_body.clientHeight;
-    var cssClass = 'annotation-pane relationship-annotation-pane';
-    var style = {
-      border: '8px dotted @blue'
+    var body_width = tool_body.clientWidth;
+
+    var cat_picker_width;
+    var div_elems = window.document.getElementsByTagName('div');
+    for(var i = 0; i < div_elems.length; i++){
+      if(div_elems[i].className == 'diagram-annotation-tool'){
+        var anno_main = div_elems[i].getElementsByTagName('main')[0];
+        var anno_elem = anno_main.getElementsByTagName('div');
+        for(var i = 0; i < anno_elem.length; i++){
+          if(anno_elem[i].className == 'annotation-pane-dialog-header'){
+            var pane_elem = anno_elem[i];
+            var cat_picker_width = pane_elem.clientWidth;
+          }
+        }
+      }
     }
-    return (
+  var anno_pane_width = body_width - cat_picker_width;
+  var new_dims= this.calculateAspectRatioFit(this.props.h_dim, this.props.v_dim,
+    anno_pane_width, body_height);
+    AnnotationManager.new_dims = new_dims;
+  var cssClass = 'annotation-pane relationship-annotation-pane';
+  var style = {
+    border: '8px dotted @blue'
+  }
+  return (
       <div className={cssClass}
         style={style}>
         <div className="annotation-pane-image" ref="origin">
-          <img src={this.props.imageUrl} className="hcenter vcenter"/>
+          <img src={this.props.imageUrl} style={{height: new_dims.height, width: new_dims.width}}/>
+
           {this.props.annotations}
         </div>
       </div>
