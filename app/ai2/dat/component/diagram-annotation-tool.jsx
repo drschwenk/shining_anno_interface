@@ -165,11 +165,11 @@ class DiagramAnnotationTool extends React.Component {
           onDragOver={this.cancelDragOver}>
         <header className="padded flex-row">
           <h1 className=" flex-align-left">Textbook Annotation Tool</h1>
-          <button onClick={this.advanceQuestionGroup} className="btn-red">q) Save Relationship</button>
+          <button onClick={this.advanceQuestionGroup} className="btn-red">[S] Save Relationship</button>
         <p>
           &emsp;
         </p>
-         <button onClick={this.saveAndAdvance} className="btn-green">Save Page and Advance</button>
+         <button onClick={this.saveAndAdvance} className="btn-green">Save Image and Advance</button>
           <a href={cur_image_url}
             target="_blank" className="review_instructions flex-align-right">
             <strong>original image</strong>
