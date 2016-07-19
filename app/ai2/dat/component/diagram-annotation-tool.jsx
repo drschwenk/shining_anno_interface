@@ -31,7 +31,6 @@ class DiagramAnnotationTool extends React.Component {
     this.set_textMisc = this.set_textMisc.bind(this);
     this.undoSingleClick= this.undoSingleClick.bind(this);
     this.undoGroup= this.undoGroup.bind(this);
-    this.resetCurrent= this.resetCurrent.bind(this);
   }
   handleNewImageSet() {
     AnnotationManager.clear();
@@ -81,23 +80,18 @@ class DiagramAnnotationTool extends React.Component {
   }
   undoSingleClick(){
     var last_annotation = AnnotationManager.getLastClicked();
-    console.log(last_annotation);
     if(last_annotation.category.length > 1 && last_annotation.group_n.length > 1){
       last_annotation.category.pop();
       last_annotation.group_n.pop();
       AnnotationManager.undoClick();
     }
-    this.resetCurrent();
-  }
-  resetCurrent(){
-    var cur_cat = AnnotationManager.getCurrentCategory();
-    this.refs.cat_selector.setState({current_category: cur_cat});
+    AnnotationManager.emit(AnnotationManagerEvent.MODE_CHANGED);
   }
   undoGroup(){
     if(AnnotationManager.getCurrentGroupNumber() > 1){
       AnnotationManager.undoGroup();
     }
-    this.resetCurrent();
+    AnnotationManager.emit(AnnotationManagerEvent.MODE_CHANGED);
   }
   componentDidMount() {
     ImageManager.on(ImageManagerEvent.NEW_IMAGES, this.handleNewImageSet);

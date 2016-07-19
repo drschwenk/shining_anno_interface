@@ -20,7 +20,6 @@ class TextAnnotationComponent extends RelateableComponent {
     // }
     const cssClass = this.getRelatedCssClass();
     const relationshipLabels = this.renderRelationshipLabels();
-    // console.log(relationshipLabels);
     const bounds = this.props.annotation.bounds.getBoundingRectangle();
     //          className={cssClass}
     //          relationshipLabels={relationshipLabels}
