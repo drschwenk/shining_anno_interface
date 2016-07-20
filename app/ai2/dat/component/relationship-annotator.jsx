@@ -12,30 +12,14 @@ const RelationshipAnnotation = require('../model/relationship-annotation');
 const ArrowAnnotation = require('../model/arrow-annotation');
 const Annotator = require('./annotator.jsx');
 const Radium = require('radium');
-
+const AnnotationManagerEvent = require('../model/annotation-manager-event');
+const RelationshipRestriction = require('../model/relationship-restrictions');
+const MessageManager = require('../util/message-manager');
 
 class RelationshipAnnotator extends Annotator {
   constructor(props) {
     super(props);
   }
-  // handleAnnotationClick(annotation) {
-  //   if (this.relationship.isRelated(annotation.id)) {
-  //     if (this.relationship.source === annotation.id) {
-  //       this.relationship.removeSourceId();
-  //     } else {
-  //       this.relationship.removeTargetId();
-  //     }
-  //     annotation.removeRelationship(this.relationship);
-  //   } else {
-  //     if (!this.relationship.source) {
-  //       this.relationship.setSourceId(annotation.id);
-  //     } else {
-  //       this.relationship.setTargetId(annotation.id);
-  //     }
-  //     annotation.addRelationship(this.relationship);
-  //   }
-  // }
-
   handleAnnotationClick(annotation) {
     if (this.relationship.isRelated(annotation.id)) {
       if (this.relationship.source === annotation.id) {
@@ -53,81 +37,23 @@ class RelationshipAnnotator extends Annotator {
       annotation.addRelationship(this.relationship);
     }
   }
-
-  handleArrowPointClick(annotation, arrowPoint, arrowPointType) {
-    var removed;
-    switch (arrowPointType) {
-      case 'origin':
-        if (this.relationship.arrowOrigin) {
-          this.relationship.removeOriginId();
-          if (this.relationship.arrowOrigin === arrowPoint.id) {
-            annotation.removeRelationship(this.relationship);
-          } else {
-            removed = AnnotationManager.getAnnotation(
-                this.props.imageId,
-                this.relationship.arrowOrigin
-                );
-            removed.removeRelationship(this.relationship);
-            this.relationship.setArrowOriginId(arrowPoint.id, arrowPoint.remoteId);
-            annotation.addRelationship(this.relationship);
-          }
-        } else {
-          this.relationship.setArrowOriginId(arrowPoint.id, arrowPoint.remoteId);
-          annotation.addRelationship(this.relationship);
-        }
-        break;
-      case 'destination':
-        if (this.relationship.arrowDestination) {
-          this.relationship.removeDestinationId();
-          if (this.relationship.arrowDestination === arrowPoint.id) {
-            annotation.removeRelationship(this.relationship);
-          } else {
-            removed = AnnotationManager.getAnnotation(
-                this.props.imageId,
-                this.relationship.arrowDestination
-                );
-            removed.removeRelationship(this.relationship);
-            this.relationship.setArrowDestinationId(arrowPoint.id, arrowPoint.remoteId);
-            annotation.addRelationship(this.relationship);
-          }
-        } else {
-          this.relationship.setArrowDestinationId(arrowPoint.id, arrowPoint.remoteId);
-          annotation.addRelationship(this.relationship);
-        }
-        break;
-    }
-
-  }
-
   handleClickEvent(event, annotation, arrowPoint, arrowPointType) {
-    if(annotation instanceof QuestionAnnotation){
-      annotation.category.push(AnnotationManager.getCurrentCategory());
+    var cur_cat = AnnotationManager.getCurrentCategory();
+    if(AnnotationManager.getCurrentClickNumber() <= RelationshipRestriction[cur_cat]){
+      annotation.category.push(cur_cat);
       var gn = AnnotationManager.getCurrentGroupNumber();
       var cn = AnnotationManager.getCurrentClickNumber();
       var new_grouping = [gn, cn];
       annotation.group_n.push(new_grouping);
       AnnotationManager.advanceCurrentClickNumber();
-      AnnotationManager.addAnnotation(this.props.imageId, annotation);
+      // AnnotationManager.addAnnotation(this.props.imageId, annotation);
+      AnnotationManager.emit(AnnotationManagerEvent.MODE_CHANGED);
       AnnotationManager.setLastClicked(annotation);
     }
+    else{
+      MessageManager.warn("Reached the max count for that relationship");
+    }
   }
-  //   if (!this.relationship) {
-  //     this.relationship = new RelationshipAnnotation(
-  //         AnnotationManager.getNewAnnotationId(AnnotationType.RELATIONSHIP)
-  //     );
-  //   }
-  //   if (annotation instanceof ShapeAnnotation || annotation instanceof TextAnnotation || annotation instanceof ContainerAnnotation ) {
-  //     this.handleAnnotationClick(annotation);
-  //   } else if (annotation instanceof ArrowAnnotation) {
-  //     this.handleArrowPointClick(annotation, arrowPoint, arrowPointType);
-  //   }
-  //
-  //   if(this.relationship.source && this.relationship.target) {
-  //     AnnotationManager.addAnnotation(this.props.imageId, this.relationship);
-  //     this.relationship = undefined;
-  //   }
-  // }
-
   componentDidMount() {
     super.componentDidMount();
     AnnotationClickManager.activate().clicked(this.handleClickEvent.bind(this));

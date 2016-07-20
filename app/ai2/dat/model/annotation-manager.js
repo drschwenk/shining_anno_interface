@@ -119,7 +119,9 @@ class AnnotationManager extends EventEmitter {
     return annotation;
   }
   undoClick(){
-    this.current_click_order -= 1;
+    if(this.getCurrentClickNumber() > 1){
+      this.current_click_order -= 1;
+    }
   }
   hasAnnotations() {
     return this.annotations.size > 0;
