@@ -11,6 +11,9 @@ const Messages = require('./messages.jsx');
 const KeyMaster = require('../util/key-master');
 const KeyCode = require('../util/key-code');
 const CategorySelector = require('./category-selector.jsx');
+const RelationshipRestriction = require('../model/relationship-restrictions');
+const MessageManager = require('../util/message-manager');
+
 
 
 class DiagramAnnotationTool extends React.Component {
@@ -86,8 +89,6 @@ class DiagramAnnotationTool extends React.Component {
   undoSingleClick(){
     var last_annotation = AnnotationManager.getLastClicked();
     if(last_annotation.category.length > 1 && last_annotation.group_n.length > 1){
-      last_annotation.category.pop();
-      last_annotation.group_n.pop();
       AnnotationManager.undoClick();
     }
     this.resetCurrent();
@@ -144,8 +145,14 @@ class DiagramAnnotationTool extends React.Component {
     form.submit();
   }
   advanceQuestionGroup() {
-    AnnotationManager.advanceCurrentGroupNumber();
-    AnnotationManager.resetCurrentClickNumber();
+    var current_cat = AnnotationManager.getCurrentCategory();
+    if(AnnotationManager.getCurrentGroupLength() == RelationshipRestriction[current_cat]){
+      AnnotationManager.advanceCurrentGroupNumber();
+      AnnotationManager.resetCurrentClickNumber();
+    }
+    else{
+      MessageManager.warn("Not enough constituents to save " + current_cat);
+    }
   }
   cancelDragOver(event) {
     event.preventDefault();

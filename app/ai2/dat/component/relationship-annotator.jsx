@@ -46,12 +46,11 @@ class RelationshipAnnotator extends Annotator {
       var new_grouping = [gn, cn];
       annotation.group_n.push(new_grouping);
       AnnotationManager.advanceCurrentClickNumber();
-      // AnnotationManager.addAnnotation(this.props.imageId, annotation);
       AnnotationManager.emit(AnnotationManagerEvent.MODE_CHANGED);
       AnnotationManager.setLastClicked(annotation);
     }
     else{
-      MessageManager.warn("Reached the max count for that relationship");
+      MessageManager.warn("Reached the max number of constituents for " +cur_cat);
     }
   }
   componentDidMount() {

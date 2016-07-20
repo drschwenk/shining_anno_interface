@@ -66,7 +66,8 @@ class AnnotationManager extends EventEmitter {
     this.current_question_group = 1;
     this.current_click_order = 1;
     this.base_url = "https://s3-us-west-2.amazonaws.com/ai2-vision-turk-data/shining-3-watercycle-test/anno_w_infrastructure/";
-    this.last_clicked = 0;
+    this.last_clicked =[];
+    this.group_history = [];
   }
   clear() {
     this.annotations.clear();
@@ -81,6 +82,9 @@ class AnnotationManager extends EventEmitter {
   setCurrentCategory(new_category){
     this.current_category_selector = new_category;
   }
+  getCurrentGroupLength(){
+    return this.last_clicked.length;
+  }
   getCurrentGroupNumber(){
     return this.current_question_group;
   }
@@ -88,6 +92,8 @@ class AnnotationManager extends EventEmitter {
     return this.current_click_order;
   }
   advanceCurrentGroupNumber(){
+    this.group_history.push(this.last_clicked);
+    this.resetLastClicked();
     this.current_question_group += 1;
     this.emit(AnnotationManagerEvent.MODE_CHANGED);
   }
@@ -103,10 +109,13 @@ class AnnotationManager extends EventEmitter {
     this.annotations.set(imageId, new AnnotationCollection());
   }
   setLastClicked(last_annotation_clicked){
-    this.last_clicked = last_annotation_clicked;
+    this.last_clicked.push(last_annotation_clicked);
+  }
+  resetLastClicked(){
+    this.last_clicked =[];
   }
   getLastClicked(){
-    return this.last_clicked;
+    return this.last_clicked.slice(-1)[0];
   }
   getAnnotations(imageId) {
     return this.annotations.get(imageId) || new AnnotationCollection();
@@ -120,14 +129,30 @@ class AnnotationManager extends EventEmitter {
   }
   undoClick(){
     if(this.getCurrentClickNumber() > 1){
+      var last_annotation = this.getLastClicked();
+      last_annotation.category.pop();
+      last_annotation.group_n.pop();
+      this.last_clicked.pop();
       this.current_click_order -= 1;
     }
   }
   hasAnnotations() {
     return this.annotations.size > 0;
   }
+  undoGroupMembers(relationship_group){
+    for(var i in relationship_group){
+      relationship_group[i].category.pop();
+      relationship_group[i].group_n.pop();
+    }
+  }
   undoGroup(){
-    this.current_question_group -=1;
+    if(this.last_clicked.length > 0){
+      this.undoGroupMembers(this.last_clicked);
+    }
+    this.undoGroupMembers(this.group_history.slice(-1)[0]);
+    this.group_history.pop();
+    this.current_question_group -= 1;
+    this.resetCurrentClickNumber();
   }
   addRelationships(imageId, relationship) {
     var annotations = this.getAnnotations(imageId).all();
