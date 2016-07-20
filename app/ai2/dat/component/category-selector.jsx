@@ -23,62 +23,62 @@ class CategorySelector extends React.Component {
         this.setState({current_category: selected_category});
     }
     render() {
-        var header_button = <CategoryButton
+        var InterObjectLinkage_button = <CategoryButton
           category={'InterObjectLinkage'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'1'}
           />;
-        var discussion_button = <CategoryButton
+        var IntraObjectLabel_button = <CategoryButton
           category={'IntraObjectLabel'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'2'}
           />;
-        var question_button = <CategoryButton
+        var arrowDescriptor_button = <CategoryButton
           category={'arrowDescriptor'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'3'}
           />;
-        var label_button = <CategoryButton
+        var IntraObjectLinkage_button = <CategoryButton
           category={'IntraObjectLinkage'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'4'}
           />;
-        var answer_button = <CategoryButton
+        var IntraObjectLoop_button = <CategoryButton
           category={'IntraObjectLoop'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
           hotKeyNumber={'5'}
           />;
-        var irl_button = <CategoryButton
+        var intraObjectRegionLabel_button = <CategoryButton
             category={'intraObjectRegionLabel'}
             current_category={this.state.current_category}
             onClickEvent={this.handleClickEvent}
             hotKeyNumber={'6'}
             />;
-          var st_button = <CategoryButton
+          var sectionTitle_button = <CategoryButton
             category={'sectionTitle'}
             current_category={this.state.current_category}
             onClickEvent={this.handleClickEvent}
             hotKeyNumber={'7'}
             />;
-          var it_button = <CategoryButton
+          var imageTitle_button = <CategoryButton
             category={'imageTitle'}
             current_category={this.state.current_category}
             onClickEvent={this.handleClickEvent}
             hotKeyNumber={'8'}
             />;
-          var ic_button= <CategoryButton
+          var imageCaption_button= <CategoryButton
             category={'imageCaption'}
             current_category={this.state.current_category}
             onClickEvent={this.handleClickEvent}
             hotKeyNumber={'9'}
             />;
 
-          var mt_button = <CategoryButton
+          var textMisc_button = <CategoryButton
             category={'textMisc'}
             current_category={this.state.current_category}
             onClickEvent={this.handleClickEvent}
@@ -91,34 +91,34 @@ class CategorySelector extends React.Component {
         <div className="annotation-pane-dialog-header">
             <span>Select Category</span>
             <div className="annotation-pane-dialog-content">
-              {header_button}
+              {InterObjectLinkage_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {discussion_button}
+              {IntraObjectLabel_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {question_button}
+              {arrowDescriptor_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {label_button}
+              {IntraObjectLinkage_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {answer_button}
+              {IntraObjectLoop_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {irl_button}
+              {intraObjectRegionLabel_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {st_button}
+              {sectionTitle_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {it_button}
+              {imageTitle_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {ic_button}
+              {imageCaption_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {mt_button}
+              {textMisc_button}
             </div>
             <p className="flex-align-center">rel= {relationship_number} cn= {component_number}</p>
           </div>
