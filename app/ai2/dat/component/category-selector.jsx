@@ -120,7 +120,9 @@ class CategorySelector extends React.Component {
             <div className="annotation-pane-dialog-content">
               {textMisc_button}
             </div>
-            <p className="flex-align-center">rel= {relationship_number} cn= {component_number}</p>
+            <p className="flex-align-center">rel= {relationship_number - 1} cn= {component_number -1}</p>
+            <p className="flex-align-center"> [u] = component undo</p>
+            <p className="flex-align-center"> [z] = relationship undo</p>
           </div>
     );
     }

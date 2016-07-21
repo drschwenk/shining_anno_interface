@@ -172,7 +172,7 @@ class DiagramAnnotationTool extends React.Component {
       <div className="diagram-annotation-tool"
           onDragOver={this.cancelDragOver}>
         <header className="padded flex-row">
-          <h1 className=" flex-align-left">Textbook Annotation Tool</h1>
+          <h1 className=" flex-align-left">Diagram Annotation Tool</h1>
           <button onClick={this.advanceQuestionGroup} className="btn-red">[S] Save Relationship</button>
         <p>
           &emsp;
