@@ -6,6 +6,7 @@ const AnnotationManager = require('../model/annotation-manager');
 const ImageManager = require('../model/image-manager');
 const Radium = require('radium');
 const CategoryButton = require('./category-button.jsx');
+const MessageManager = require('../util/message-manager');
 
 class CategorySelector extends React.Component {
 
@@ -19,8 +20,14 @@ class CategorySelector extends React.Component {
       this.handleClickEvent(keyed_category);
     }
     handleClickEvent(selected_category){
+      if(AnnotationManager.getCurrentClickNumber() == 1){
         AnnotationManager.setCurrentCategory(selected_category);
         this.setState({current_category: selected_category});
+      }
+      else{
+        MessageManager.warn("Finish relationship or undo before changing category");
+      }
+
     }
     render() {
         var InterObjectLinkage_button = <CategoryButton
@@ -89,7 +96,6 @@ class CategorySelector extends React.Component {
 
         return (
         <div className="annotation-pane-dialog-header">
-            <span>Select Category</span>
             <div className="annotation-pane-dialog-content">
               {InterObjectLinkage_button}
             </div>

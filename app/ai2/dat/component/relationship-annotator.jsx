@@ -40,14 +40,19 @@ class RelationshipAnnotator extends Annotator {
   handleClickEvent(event, annotation, arrowPoint, arrowPointType) {
     var cur_cat = AnnotationManager.getCurrentCategory();
     if(AnnotationManager.getCurrentClickNumber() <= RelationshipRestriction[cur_cat]){
-      annotation.category.push(cur_cat);
-      var gn = AnnotationManager.getCurrentGroupNumber();
-      var cn = AnnotationManager.getCurrentClickNumber();
-      var new_grouping = [gn, cn];
-      annotation.group_n.push(new_grouping);
-      AnnotationManager.advanceCurrentClickNumber();
-      AnnotationManager.emit(AnnotationManagerEvent.MODE_CHANGED);
-      AnnotationManager.setLastClicked(annotation);
+      if(annotation == AnnotationManager.getLastClicked()){
+        MessageManager.warn("trying to add the same constituent twice");
+      }
+      else{
+        annotation.category.push(cur_cat);
+        var gn = AnnotationManager.getCurrentGroupNumber();
+        var cn = AnnotationManager.getCurrentClickNumber();
+        var new_grouping = [gn, cn];
+        annotation.group_n.push(new_grouping);
+        AnnotationManager.advanceCurrentClickNumber();
+        AnnotationManager.emit(AnnotationManagerEvent.MODE_CHANGED);
+        AnnotationManager.setLastClicked(annotation);
+      }
     }
     else{
       MessageManager.warn("Reached the max number of constituents for " +cur_cat);

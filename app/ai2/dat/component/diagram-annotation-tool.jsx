@@ -43,44 +43,34 @@ class DiagramAnnotationTool extends React.Component {
     }
   }
   set_IntraObjectLinkage(){
-    AnnotationManager.setCurrentCategory('IntraObjectLinkage');
-    this.refs.cat_selector.setState({current_category: 'IntraObjectLinkage'});
+    this.refs.cat_selector.hotKeyPressed('IntraObjectLinkage');
   }
   set_IntraObjectLabel(){
-    AnnotationManager.setCurrentCategory('IntraObjectLabel');
-    this.refs.cat_selector.setState({current_category: 'IntraObjectLabel'});
+    this.refs.cat_selector.hotKeyPressed('IntraObjectLabel');
   }
   set_InterObjectLinkage(){
-    AnnotationManager.setCurrentCategory('InterObjectLinkage');
-    this.refs.cat_selector.setState({current_category: 'InterObjectLinkage'});
+    this.refs.cat_selector.hotKeyPressed('InterObjectLinkage');
   }
   set_IntraObjectLoop(){
-    AnnotationManager.setCurrentCategory('IntraObjectLoop');
-    this.refs.cat_selector.setState({current_category: 'Answer'});
+    this.refs.cat_selector.hotKeyPressed('IntraObjectLoop');
   }
   set_arrowDescriptor(){
-    AnnotationManager.setCurrentCategory('arrowDescriptor');
-    this.refs.cat_selector.setState({current_category: 'arrowDescriptor'});
+    this.refs.cat_selector.hotKeyPressed('arrowDescriptor');
   }
   set_intraObjectRegionLabel(){
-    AnnotationManager.setCurrentCategory('intraObjectRegionLabel');
-    this.refs.cat_selector.setState({current_category: 'intraObjectRegionLabel'});
+    this.refs.cat_selector.hotKeyPressed('intraObjectRegionLabel');
   }
   set_sectionTitle(){
-    AnnotationManager.setCurrentCategory('sectionTitle');
-    this.refs.cat_selector.setState({current_category: 'sectionTitle'});
+    this.refs.cat_selector.hotKeyPressed('sectionTitle');
   }
   set_imageTitle(){
-    AnnotationManager.setCurrentCategory('imageTitle');
-    this.refs.cat_selector.setState({current_category: 'imageTitle'});
+    this.refs.cat_selector.hotKeyPressed('imageTitle');
   }
   set_imageCaption(){
-    AnnotationManager.setCurrentCategory('imageCaption');
-    this.refs.cat_selector.setState({current_category: 'imageCaption'});
+    this.refs.cat_selector.hotKeyPressed('imageCaption');
   }
   set_textMisc(){
-    AnnotationManager.setCurrentCategory('textMisc');
-    this.refs.cat_selector.setState({current_category: 'textMisc'});
+    this.refs.cat_selector.hotKeyPressed('textMisc');
   }
   resetCurrent(){
     var cur_cat = AnnotationManager.getCurrentCategory();
