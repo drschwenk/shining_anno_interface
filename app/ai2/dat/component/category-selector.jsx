@@ -34,7 +34,7 @@ class CategorySelector extends React.Component {
           category={'InterObjectLinkage'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
-          hotKeyNumber={'1'}
+          hotKeyNumber={'3'}
           />;
         var IntraObjectLabel_button = <CategoryButton
           category={'IntraObjectLabel'}
@@ -46,7 +46,7 @@ class CategorySelector extends React.Component {
           category={'arrowDescriptor'}
           current_category={this.state.current_category}
           onClickEvent={this.handleClickEvent}
-          hotKeyNumber={'3'}
+          hotKeyNumber={'1'}
           />;
         var IntraObjectLinkage_button = <CategoryButton
           category={'IntraObjectLinkage'}
@@ -97,13 +97,13 @@ class CategorySelector extends React.Component {
         return (
         <div className="annotation-pane-dialog-header">
             <div className="annotation-pane-dialog-content">
-              {InterObjectLinkage_button}
+              {arrowDescriptor_button}
             </div>
             <div className="annotation-pane-dialog-content">
               {IntraObjectLabel_button}
             </div>
             <div className="annotation-pane-dialog-content">
-              {arrowDescriptor_button}
+              {InterObjectLinkage_button}
             </div>
             <div className="annotation-pane-dialog-content">
               {IntraObjectLinkage_button}

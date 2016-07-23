@@ -3,9 +3,9 @@
 const KeyCode = {
   Enter: 13,
   Advance_Question: 83,
-  InterObjectLinkage: 49,
+  InterObjectLinkage: 51,
   IntraObjectLabel: 50,
-  arrowDescriptor: 51,
+  arrowDescriptor: 49,
   IntraObjectLinkage: 52,
   IntraObjectLoop: 53,
   intraObjectRegionLabel: 54,
